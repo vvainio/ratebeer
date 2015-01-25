@@ -14,4 +14,8 @@ class Beer < ActiveRecord::Base
     # (a.inject(:+).to_f / a.size).round(1)
     # (a.reduce(:+).to_f / a.size).round(1)
   end
+
+  def to_s
+    "#{name} (#{brewery.name})"
+  end
 end
