@@ -16,10 +16,13 @@ class BeersController < ApplicationController
   def new
     @beer = Beer.new
     @breweries = Brewery.all
+    @styles = ['Weizen', 'Lager', 'Pale ale', 'IPA', 'Porter']
   end
 
   # GET /beers/1/edit
   def edit
+    @breweries = Brewery.all
+    @styles = ['Weizen', 'Lager', 'Pale ale', 'IPA', 'Porter']
   end
 
   # POST /beers
