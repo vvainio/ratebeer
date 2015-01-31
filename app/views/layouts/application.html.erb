@@ -14,6 +14,12 @@
   <%= link_to 'ratings', ratings_path %>
 </nav>
 
+<% if session[:last_rating].nil? %>
+  <p>No ratings given</p>
+<% else %>
+  <p>Previous rating: <%= session[:last_rating] %></p>
+<% end %>
+
 <%= yield %>
 
 </body>
