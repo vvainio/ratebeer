@@ -11,4 +11,7 @@ class User < ActiveRecord::Base
   validates :username, uniqueness: true,
                        length: { minimum: 3,
                                  maximum: 15 }
+  validates :password, length: { minimum: 4 },
+                       format: { with: /(?=.*[A-Z])(?=.*\d).+/,
+                                 message: 'must contain at least one capital letter (A-Z) and one digit (0-9)'}
 end
