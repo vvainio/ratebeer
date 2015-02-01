@@ -20,8 +20,22 @@
   </ul>
 <% end %>
 
+<h2>beer clubs</h2>
+<% if @user.beer_clubs.empty? %>
+  <p>is not a member of any beer club</p>
+<% else %>
+  <p>is a member of <%= pluralize(@user.beer_clubs.count, 'beer club', 'beer clubs') %>:</p>
+  <ul>
+    <% @user.beer_clubs.each do |club| %>
+      <li>
+        <%= club %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>
+
 <% if @user == current_user %>
-  <p>Account management</p>
+  <h2>account management</h2>
   <p>
     <%= link_to 'Edit', edit_user_path %> |
     <%= link_to 'Delete', @user, method: :delete, data: { confirm: 'Are you sure?' } %>
