@@ -6,7 +6,7 @@
       <h2><%= pluralize(@membership.errors.count, "error") %> prohibited membership from being saved:</h2>
 
       <ul>
-      <% @rating.errors.full_messages.each do |msg| %>
+      <% @membership.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
       </ul>

@@ -10,8 +10,9 @@ class MembershipsController < ApplicationController
 
   def create
     @membership = Membership.new params.require(:membership).permit(:beer_club_id)
+    @beer_club = BeerClub.find(@membership.beer_club_id)
 
-    if @membership.save
+    if !current_user.beer_clubs.exists?(@beer_club) && @membership.save
       current_user.memberships << @membership
       redirect_to user_path current_user
     else
