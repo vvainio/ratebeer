@@ -5,6 +5,8 @@ Rails.application.routes.draw do
 
   resources :breweries
 
+  resources :beer_clubs
+
   resources :ratings, only: [:index, :new, :create, :destroy]
 
   resources :users

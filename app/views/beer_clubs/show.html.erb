@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @beer_club.name %>
+</p>
+
+<p>
+  <strong>Founded:</strong>
+  <%= @beer_club.founded %>
+</p>
+
+<p>
+  <strong>City:</strong>
+  <%= @beer_club.city %>
+</p>
+
+<%= link_to 'Edit', edit_beer_club_path(@beer_club) %> |
+<%= link_to 'Back', beer_clubs_path %>
