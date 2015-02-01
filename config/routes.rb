@@ -7,6 +7,8 @@ Rails.application.routes.draw do
 
   resources :beer_clubs
 
+  resources :memberships, only: [:index, :new, :create, :destroy]
+
   resources :ratings, only: [:index, :new, :create, :destroy]
 
   resources :users

@@ -20,6 +20,7 @@
   <% else %>
     <%= link_to current_user.username, current_user %>
     <%= link_to 'rate a beer', new_rating_path %>
+    <%= link_to 'join a club', new_membership_path %>
     <%= link_to 'sign out', signout_path, method: :delete %>
   <% end %>
 </nav>
