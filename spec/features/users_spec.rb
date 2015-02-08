@@ -26,4 +26,33 @@ describe 'User' do
       expect { click_button('Create User') }.to change { User.count }.by(1)
     end
   end
+
+  describe 'show page' do
+    it 'should list only ratings made by user' do
+      user = User.first
+      user2 = User.create username: 'test_user2'
+      beer = add_rating_by_user(user)
+      add_rating_by_user(user2)
+
+      visit user_path(user)
+      expect(page).to have_content beer.name
+      expect(page).to have_content user.username
+      expect(page).to_not have_content user2.username
+    end
+
+    it 'should remove deleted rating from database' do
+      sign_in(username: 'test_user', password: 'Passw0rd')
+      user = User.first
+      add_rating_by_user(user)
+
+      visit user_path(user)
+      expect { click_on('delete') }.to change { user.ratings.count }.from(1).to(0)
+    end
+  end
+end
+
+def add_rating_by_user(user)
+  beer = FactoryGirl.create(:beer)
+  FactoryGirl.create(:rating, score: 10, beer: beer, user: user)
+  beer
 end
