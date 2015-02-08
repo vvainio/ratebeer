@@ -2,6 +2,11 @@ require 'rails_helper'
 
 describe 'New Beer page' do
   let!(:brewery) { FactoryGirl.create :brewery, name: 'Koff' }
+  let!(:user) { FactoryGirl.create :user }
+
+  before :each do
+    sign_in(username: 'test_user', password: 'Passw0rd')
+  end
 
   it 'creates new beer with valid name' do
     visit new_beer_path
