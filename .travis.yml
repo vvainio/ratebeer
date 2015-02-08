@@ -1,0 +1,13 @@
+language: ruby
+rvm:
+- 2.2.0
+script:
+- bundle exec rake db:migrate --trace
+- RAILS_ENV=test bundle exec rake db:migrate --trace
+- bundle exec rake db:test:prepare
+- bundle exec rspec -fd spec/
+deploy:
+  provider: heroku
+  api_key:
+    secure: hpC6AdZtB6CsKixqOx1ypoVMMr9+GuUaW+fZc7I5qz6yHUAOb19ilIpCXZ7E+w3vre4BzwuD8GupWvvuINIELExACzgY/p4LuCmsv5blE9PsrMhXEVOht4cbZjobW1PutYzWgTYtkN+QlQ2widy1Sj0hUY9qoS6Y/XRDZ//p2BY=
+  app: sheltered-retreat-7709
