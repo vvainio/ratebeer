@@ -56,3 +56,7 @@ def add_rating_by_user(user)
   FactoryGirl.create(:rating, score: 10, beer: beer, user: user)
   beer
 end
+
+# to be included in simplecov
+BeerClub
+BeerClubsController
