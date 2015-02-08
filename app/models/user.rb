@@ -19,4 +19,16 @@ class User < ActiveRecord::Base
     return nil if ratings.empty?
     ratings.sort_by(&:score).last.beer
   end
+
+  # Returns a beer style with the highest average rating
+  def favorite_style
+    return nil if beers.empty?
+    beers.group(:style).order('avg(ratings.score)').last.style
+  end
+
+  # Returns a brewery with the highest average rating
+  def favorite_brewery
+    return nil if beers.empty?
+    beers.group(:brewery_id).order('avg(ratings.score)').last.brewery
+  end
 end

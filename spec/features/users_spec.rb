@@ -28,21 +28,30 @@ describe 'User' do
   end
 
   describe 'show page' do
+    let!(:user) { User.first }
+
     it 'should list only ratings made by user' do
-      user = User.first
-      user2 = User.create username: 'test_user2'
       beer = add_rating_by_user(user)
-      add_rating_by_user(user2)
+
+      another_user = User.create username: 'test_user2'
+      add_rating_by_user(another_user)
 
       visit user_path(user)
       expect(page).to have_content beer.name
       expect(page).to have_content user.username
-      expect(page).to_not have_content user2.username
+      expect(page).to_not have_content another_user.username
+    end
+
+    it 'should list favorite style and brewery' do
+      add_rating_by_user(user)
+
+      visit user_path(user)
+      expect(page).to have_content 'Favorite style:'
+      expect(page).to have_content 'Favorite brewery:'
     end
 
     it 'should remove deleted rating from database' do
       sign_in(username: 'test_user', password: 'Passw0rd')
-      user = User.first
       add_rating_by_user(user)
 
       visit user_path(user)
