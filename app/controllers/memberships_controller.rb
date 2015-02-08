@@ -1,7 +1,5 @@
 class MembershipsController < ApplicationController
-  def index
-    @memberships = Membership.all
-  end
+  before_action :ensure_that_signed_in
 
   def new
     @membership = Membership.new

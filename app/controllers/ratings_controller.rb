@@ -1,4 +1,6 @@
 class RatingsController < ApplicationController
+  before_action :ensure_that_signed_in, except: [:index, :show]
+
   def index
     @ratings = Rating.all
   end
@@ -11,9 +13,7 @@ class RatingsController < ApplicationController
   def create
     @rating = Rating.new params.require(:rating).permit(:score, :beer_id)
 
-    if current_user.nil?
-      redirect_to signin_path, notice: 'You need to be signed in.'
-    elsif @rating.save
+    if @rating.save
       current_user.ratings << @rating
       redirect_to user_path current_user
     else
@@ -24,7 +24,6 @@ class RatingsController < ApplicationController
 
   def destroy
     rating = Rating.find(params[:id])
-    rating.delete if rating.user == current_user
     redirect_to :back
   end
 end

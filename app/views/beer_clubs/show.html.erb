@@ -19,5 +19,7 @@
   </ul>
 <% end %>
 
-<%= link_to 'Edit club', edit_beer_club_path(@beer_club) %> |
-<%= link_to 'Back', beer_clubs_path %>
+<% if current_user %>
+  <%= link_to 'Edit', edit_beer_club_path(@beer_club) %> |
+  <%= link_to 'Destroy', @beer_club, method: :delete, data: { confirm: 'Are you sure?' } %>
+<% end %>
