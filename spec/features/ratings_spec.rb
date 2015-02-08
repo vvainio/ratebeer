@@ -20,4 +20,22 @@ describe 'Rating' do
     expect(beer1.ratings.count).to eq(1)
     expect(beer1.average_rating).to eq(15.0)
   end
+
+  describe 'Ratings page' do
+    it 'displays message if no ratings exist' do
+      visit ratings_path
+      expect(page).to have_content 'No ratings exist'
+    end
+
+    it 'should list the number of ratings' do
+      beer = FactoryGirl.create(:beer, brewery: brewery)
+      FactoryGirl.create(:rating, score: 20, beer: beer, user: user)
+
+      visit ratings_path
+      expect(page).to have_content 'Number of ratings: 1'
+      expect(page).to have_content "#{beer.name}"
+      expect(page).to have_content "#{beer.ratings.first.score}"
+      expect(page).to have_content "#{beer.ratings.first.user.username}"
+    end
+  end
 end
