@@ -1,4 +1,8 @@
 class BeermappingApi
+  def self.place(id)
+    Rails.cache.fetch(id) { fetch_place(id) }
+  end
+
   def self.places_in(city)
     city = city.downcase
     Rails.cache.fetch(city) { fetch_places_in(city) }
@@ -6,6 +10,10 @@ class BeermappingApi
 
   private
 
+  def self.fetch_place(id)
+    params = "locquery/#{apikey}/#{id}"
+    data = parse_response(request_with(params))
+  end
 
   def self.fetch_places_in(city)
     params = "loccity/#{apikey}/#{ERB::Util.url_encode(city)}"
