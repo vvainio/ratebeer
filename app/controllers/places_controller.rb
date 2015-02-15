@@ -36,6 +36,8 @@ class PlacesController < ApplicationController
   end
 
   def apikey
-    Rails.application.secrets.google_apikey || (fail 'Google APIKEY is not defined')
+    Rails.application.secrets.google_apikey ||
+      ENV['GOOGLE_APIKEY'] ||
+      (fail 'Google APIKEY is not defined')
   end
 end
