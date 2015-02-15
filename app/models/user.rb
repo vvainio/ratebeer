@@ -23,7 +23,7 @@ class User < ActiveRecord::Base
   # Returns a beer style with the highest average rating
   def favorite_style
     return nil if beers.empty?
-    beers.select(:style).group(:style).order('avg(ratings.score)').last.style
+    beers.select(:style_id).group(:style_id).order('avg(ratings.score)').last.style
   end
 
   # Returns a brewery with the highest average rating
