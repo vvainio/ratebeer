@@ -3,6 +3,8 @@ Rails.application.routes.draw do
 
   resources :beers
 
+  resources :styles
+
   resources :breweries
 
   resources :beer_clubs

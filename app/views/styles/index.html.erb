@@ -1,0 +1,18 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Styles</h1>
+
+<% if @styles.empty? %>
+  <p>No styles exist.</p>
+<% else %>
+  <p>Number of styles: <%= @styles.count %></p>
+
+  <ul>
+    <% @styles.each do |style| %>
+      <li><%= link_to style, style %></li>
+    <% end %>
+  </ul>
+  <br>
+<% end %>
+
+<%= link_to 'New Style', new_style_path if current_user %><br>
