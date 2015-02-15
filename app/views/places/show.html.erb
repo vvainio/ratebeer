@@ -1,3 +1,12 @@
 <h1><%= @place['name'] %></h1>
 <p><%= @place['street'] %></p>
 <p><%= "#{@place['zip']} #{@place['city']}" %></p>
+
+<% if @iframe_src %>
+  <iframe
+    width="600"
+    height="450"
+    frameborder="0" style="border:0"
+    src=<%= @iframe_src %>
+  </iframe>
+<% end %>
