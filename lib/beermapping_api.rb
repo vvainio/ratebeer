@@ -6,23 +6,31 @@ class BeermappingApi
 
   private
 
+
   def self.fetch_places_in(city)
-    # url = "http://beermapping.com/webservice/loccity/#{apikey}/"
-
-    url = 'http://stark-oasis-9187.herokuapp.com/api/'
-
-    response = HTTParty.get "#{url}#{ERB::Util.url_encode(city)}"
-    places = response.parsed_response['bmp_locations']['location']
-
-    return [] if places.is_a?(Hash) && places['id'].nil?
-
+    params = "loccity/#{apikey}/#{ERB::Util.url_encode(city)}"
+    places = parse_response(request_with(params))
     places = [places] if places.is_a?(Hash)
     places.inject([]) do | set, place |
       set << Place.new(place)
     end
   end
 
+  def self.request_with(params)
+    response = HTTParty.get "#{baseurl}#{params}"
+    response.parsed_response['bmp_locations']['location']
+  end
+
+  def self.parse_response(data)
+    data.is_a?(Hash) && data['id'].nil? ? [] : data
+  end
+
+  def self.baseurl
+    # Cached api 'http://stark-oasis-9187.herokuapp.com/api/'
+    'http://beermapping.com/webservice/'
+  end
+
   def self.apikey
-    # apikey = ''
+    Rails.application.secrets.apikey || (fail 'APIKEY is not defined')
   end
 end
