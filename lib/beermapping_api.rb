@@ -39,6 +39,6 @@ class BeermappingApi
   end
 
   def self.apikey
-    Rails.application.secrets.apikey || (fail 'APIKEY is not defined')
+    Rails.application.secrets.beermapping_apikey || (fail 'BeerMapping APIKEY is not defined')
   end
 end
