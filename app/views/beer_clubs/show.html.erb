@@ -20,9 +20,11 @@
 <% end %>
 
 <% if current_user %>
-  <%= form_for(@membership) do |f| %>
-    <%= f.hidden_field :beer_club_id %>
-    <%= f.submit value: 'Join the club'%>
+  <% if @membership.valid? %>
+    <%= form_for(@membership) do |f| %>
+      <%= f.hidden_field :beer_club_id %>
+      <%= f.submit value: 'Join the club'%>
+    <% end %>
   <% end %>
 
   <p>
