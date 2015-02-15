@@ -7,7 +7,8 @@ Rails.application.routes.draw do
 
   resources :beer_clubs
 
-  resources :memberships, only: [:index, :new, :create, :destroy]
+  resources :memberships, only: [:index, :new, :create]
+  delete 'memberships', to: 'memberships#destroy'
 
   resources :ratings, only: [:index, :new, :create, :destroy]
 

@@ -20,8 +20,12 @@ class MembershipsController < ApplicationController
   end
 
   def destroy
-    membership = Membership.find(params[:id])
+    beer_club = BeerClub.where(id: params[:membership][:beer_club_id]).first
+    membership = Membership.where(
+        beer_club_id: beer_club,
+        user_id: current_user).first
+
     membership.delete if membership.user == current_user
-    redirect_to :back
+    redirect_to current_user, notice: "Successfully ended membership in #{beer_club.name}."
   end
 end
