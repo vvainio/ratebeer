@@ -39,4 +39,7 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+
+  # Use RAM as cache store, set to expire in 1 week
+  config.cache_store = :memory_store, { expires_in: 1.week }
 end
