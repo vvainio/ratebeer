@@ -11,6 +11,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'bcrypt', '~> 3.1.7'
 gem 'httparty'
+gem 'bootstrap-sass'
 
 group :development, :test do
   gem 'sqlite3'
@@ -23,6 +24,7 @@ group :development, :test do
   gem 'capybara'
   gem 'launchy'
   gem 'simplecov', require: false
+  gem 'rails_layout'
 end
 
 group :test do
