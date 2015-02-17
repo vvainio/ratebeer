@@ -20,20 +20,22 @@
 <% end %>
 
 <% if current_user %>
-  <% if @membership.valid? %>
-    <%= form_for(@membership) do |f| %>
-      <%= f.hidden_field :beer_club_id %>
-      <%= f.submit value: 'Join the club'%>
+  <p>
+    <% if @membership.valid? %>
+      <%= form_for(@membership) do |f| %>
+        <%= f.hidden_field :beer_club_id %>
+        <%= f.submit value: 'Join the club', class: "btn btn-primary" %>
+      <% end %>
+    <% else %>
+      <%= form_for(@membership, method: 'delete') do |f| %>
+        <%= f.hidden_field :beer_club_id %>
+        <%= f.submit value: 'End the membership', class: "btn btn-danger" %>
+      <% end %>
     <% end %>
-  <% else %>
-    <%= form_for(@membership, method: 'delete') do |f| %>
-      <%= f.hidden_field :beer_club_id %>
-      <%= f.submit value: 'End the membership' %>
-    <% end %>
-  <% end %>
+  </p>
 
   <p>
-    <%= link_to 'Edit', edit_beer_club_path(@beer_club) %> |
-    <%= link_to 'Destroy', @beer_club, method: :delete, data: { confirm: 'Are you sure?' } %>
+    <%= link_to 'Edit', edit_beer_club_path(@beer_club), class: "btn btn-primary" %>
+    <%= link_to 'Destroy', @beer_club, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
   </p>
 <% end %>

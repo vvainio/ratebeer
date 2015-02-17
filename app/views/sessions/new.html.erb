@@ -5,5 +5,5 @@
 <%= form_tag session_path do %>
   Username: <%= text_field_tag :username, params[:username] %>
   Password: <%= password_field_tag :password, params[:password] %>
-  <%= submit_tag "Log in" %>
+  <%= submit_tag "Log in", class: "btn btn-primary" %>
 <% end %>

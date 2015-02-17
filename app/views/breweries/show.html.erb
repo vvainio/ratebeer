@@ -2,23 +2,29 @@
 
 <h2><%= @brewery.name %></h2>
 
-<em>Established in <%= @brewery.year %></em>
+<p>
+  <em>Established in <%= @brewery.year %></em>
+</p>
 
 <p>Number of beers: <%= @brewery.beers.count %></p>
 
-<p>
-  <% @brewery.beers.each do |beer| %>
-    <%= link_to beer.name, beer %>
-  <% end %>
-</p>
+<% unless @brewery.beers.empty? %>
+  <ul>
+    <% @brewery.beers.each do |beer| %>
+      <li>
+        <%= link_to beer.name, beer %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>
 
-<% if !@brewery.ratings.empty? %>
+<% unless @brewery.ratings.empty? %>
   <p>
     Has <%= pluralize(@brewery.ratings.count, 'rating') %>, average <%= @brewery.average_rating %>
   </p>
 <% end %>
 
 <% if current_user %>
-  <%= link_to 'Edit', edit_brewery_path(@brewery) %> |
-  <%= link_to 'Destroy', @brewery, method: :delete, data: { confirm: 'Are you sure?' } %>
+  <%= link_to 'Edit', edit_brewery_path(@brewery), class: "btn btn-primary" %>
+  <%= link_to 'Destroy', @brewery, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
 <% end %>

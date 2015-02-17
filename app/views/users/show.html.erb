@@ -15,7 +15,7 @@
       <li>
         <%= rating %>
         <% if @user == current_user %>
-          <%= link_to 'delete', rating, method: :delete, data: { confirm: 'Are you sure?' } %>
+          <%= link_to 'delete', rating, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-xs" %>
         <% end %>
       </li>
     <% end %>
@@ -30,7 +30,7 @@
   <ul>
     <% @user.beer_clubs.each do |club| %>
       <li>
-        <%= club %>
+        <%= link_to club %>
       </li>
     <% end %>
   </ul>
@@ -39,7 +39,7 @@
 <% if @user == current_user %>
   <h2>account management</h2>
   <p>
-    <%= link_to 'Edit', edit_user_path %> |
-    <%= link_to 'Delete', @user, method: :delete, data: { confirm: 'Are you sure?' } %>
+    <%= link_to 'Edit', edit_user_path, class: "btn btn-primary" %>
+    <%= link_to 'Delete', @user, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
   </p>
 <% end %>

@@ -4,7 +4,7 @@
 
 <%= form_tag places_path do %>
   city <%= text_field_tag :city, params[:city] %>
-  <%= submit_tag "Search" %>
+  <%= submit_tag "Search", class: "btn btn-primary" %>
 <% end %>
 
 <% if @places %>
