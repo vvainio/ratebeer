@@ -29,7 +29,4 @@
   </p>
 <% end %>
 
-<% if current_user %>
-  <%= link_to 'Edit', edit_brewery_path(@brewery), class: "btn btn-primary" %>
-  <%= link_to 'Destroy', @brewery, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
-<% end %>
+<%= edit_and_destroy_buttons(@brewery) %>
