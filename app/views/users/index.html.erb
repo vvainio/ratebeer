@@ -18,8 +18,12 @@
     <tbody>
       <% @users.each do |user| %>
         <tr>
-          <td><%= user.username %></td>
-          <td><%= link_to 'Show', user %></td>
+          <td><%= link_to user.username, user %></td>
+          <td>
+            <% if user.disabled && admin_user %>
+              <span class="label label-info">account disabled</span>
+            <% end %>
+          </td>
         </tr>
       <% end %>
     </tbody>
