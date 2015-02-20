@@ -1,6 +1,11 @@
 <p id="notice"><%= notice %></p>
 
-<h1><%= @user.username %></h1>
+<h1>
+  <%= @user.username %>
+  <% if @user.disabled %>
+    <span class="label label-info">account disabled</span>
+  <% end %>
+</h1>
 
 <% if @user.ratings.empty? %>
   <p>has made no ratings yet</p>
@@ -43,4 +48,12 @@
     <%= link_to 'Destroy', user_path, method: :delete,
                                       data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
   </p>
+<% end %>
+
+<% if admin_user && !@user.admin %>
+  <% unless @user.disabled? %>
+    <%= link_to "Disable account", toggle_status_user_path(@user.id), method: :post, class: "btn btn-danger" %>
+  <% else %>
+    <%= link_to "Reactivate account", toggle_status_user_path(@user.id), method: :post, class: "btn btn-primary" %>
+  <% end %>
 <% end %>
