@@ -15,6 +15,10 @@ class User < ActiveRecord::Base
                        format: { with: /(?=.*[A-Z])(?=.*\d).+/,
                                  message: 'must contain at least one capital letter (A-Z) and one digit (0-9)'}
 
+  def self.top(n)
+    User.all.sort_by { |b| -(b.ratings.count || 0) }.take(n)
+  end
+
   def favorite_beer
     return nil if ratings.empty?
     ratings.sort_by(&:score).last.beer
