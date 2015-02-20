@@ -1,18 +1,74 @@
-<h1>Ratings</h1>
+<h1>Rating statistics</h1>
 
 <% if @ratings.empty? %>
   <p>No ratings exist.</p>
 <% else %>
-  <p>Number of ratings: <%= @ratings.count %></p>
+  <div class="row">
+    <div class="col-sm-4">
+      <h2>Best beers</h2>
+      <%= render 'table', items: @top_beers %>
+    </div>
 
-  <ul>
-    <% @ratings.each do |rating| %>
-      <li>
-        <%= rating %>
-        <%= link_to rating.user.username, rating.user %>
-      </li>
+    <div class="col-sm-4">
+      <h2>Best breweries</h2>
+      <%= render 'table', items: @top_breweries %>
+    </div>
+
+    <div class="col-sm-4">
+    </div>
+  </div>
+
+  <h2>Most active users</h2>
+  <table class="table table-hover">
+    <thead>
+    <tr>
+      <th></th>
+      <th>favorite beer</th>
+      <th>preferred style</th>
+      <th>favorite brewery</th>
+      <th>ratings</th>
+    </tr>
+    </thead>
+
+    <tbody>
+      <% @top_raters.each do |user| %>
+        <tr>
+          <td><%= link_to user.username, user %></td>
+          <td><%= user.favorite_beer %></td>
+          <td><%= user.favorite_style %></td>
+          <td><%= user.favorite_brewery %></td>
+          <td><%= user.ratings.count %></td>
+          <td></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <h2>Recent ratings</h2>
+  <table class="table table-hover">
+    <thead>
+    <tr>
+      <th>beer</th>
+      <th>style</th>
+      <th>brewery</th>
+      <th>rating</th>
+      <th>user</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <% @recent_ratings.each do |rating| %>
+        <tr>
+          <td><%= link_to rating.beer.name, rating.beer %></td>
+          <td><%= link_to rating.beer.style, rating.beer.style %></td>
+          <td><%= link_to rating.beer.brewery, rating.beer.brewery %></td>
+          <td><%= rating.score %></td>
+          <td><%= link_to rating.user.username, rating.user %></td>
+          <td></td>
+        </tr>
     <% end %>
-  </ul>
+    </tbody>
+  </table>
 <% end %>
 
 <%= link_to 'New Rating', new_rating_path, class: "btn btn-primary" if current_user %>
