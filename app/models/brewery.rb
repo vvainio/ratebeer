@@ -12,6 +12,10 @@ class Brewery < ActiveRecord::Base
                                    less_than_or_equal_to: proc { Time.now.year },
                                    only_integer: true }
 
+  def self.top(n)
+    Brewery.all.sort_by { |b| -(b.average_rating || 0) }.take(n)
+  end
+
   def to_s
     "#{name}"
   end
