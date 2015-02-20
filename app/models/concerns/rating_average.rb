@@ -3,6 +3,7 @@ module RatingAverage
 
   def average_rating
     # Rails ActiveRecord solution
+    return nil if ratings.empty?
     ratings.average(:score).round(1)
 
     # Ruby solution using map & inject
