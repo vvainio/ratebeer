@@ -63,6 +63,16 @@ class BreweriesController < ApplicationController
     end
   end
 
+  # POST /breweries/1/toggle_activity
+  def toggle_activity
+    brewery = Brewery.find(params[:id])
+    brewery.update_attribute :active, (!brewery.active)
+
+    new_status = brewery.active? ? 'active' : 'retired'
+
+    redirect_to :back, notice: "Brewery activity status changed to #{new_status}"
+  end
+
   private
 
     # Use callbacks to share common setup or constraints between actions.

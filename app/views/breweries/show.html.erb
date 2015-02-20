@@ -29,4 +29,6 @@
   </p>
 <% end %>
 
+<%= link_to "Toggle activity", toggle_activity_brewery_path(@brewery.id), method: :post, class: "btn btn-primary" %>
+
 <%= edit_and_destroy_buttons(@brewery) %>
