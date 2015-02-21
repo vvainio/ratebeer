@@ -36,9 +36,9 @@
       <% @top_raters.each do |user| %>
         <tr>
           <td><%= link_to user.username, user %></td>
-          <td><%= user.favorite_beer %></td>
-          <td><%= user.favorite_style %></td>
-          <td><%= user.favorite_brewery %></td>
+          <td><%= user.favorite_beer || 'No favorite beer' %></td>
+          <td><%= user.favorite_style || 'No favorite style' %></td>
+          <td><%= user.favorite_brewery || 'No favorite brewery' %></td>
           <td><%= user.ratings.count %></td>
           <td></td>
         </tr>
