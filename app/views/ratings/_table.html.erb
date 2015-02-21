@@ -10,7 +10,7 @@
     <% items.each do |item| %>
       <tr>
         <td><%= link_to item.name, item %></td>
-        <td><%= item.average_rating %></td>
+        <td><%= item.average_rating || 'Not rated yet' %></td>
         <td></td>
       </tr>
     <% end %>
