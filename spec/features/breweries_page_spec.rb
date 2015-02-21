@@ -14,11 +14,10 @@ describe 'Breweries page' do
       @breweries.each do |brewery_name|
         FactoryGirl.create(:brewery, name: brewery_name, year: year += 1, active: true)
       end
-
-      visit breweries_path
     end
 
     it 'lists the active breweries and their total number' do
+      visit breweries_path
       expect(page).to have_content "Number of active breweries: #{@breweries.count}"
       @breweries.each do |brewery_name|
         expect(page).to have_content brewery_name
@@ -26,11 +25,14 @@ describe 'Breweries page' do
     end
 
     it 'lists the retired breweries and their total number' do
-      FactoryGirl.create(:brewery, name: 'Inactive brewery', year: 1900, active: false)
+      brewery = FactoryGirl.create(:brewery, name: 'Inactive brewery', year: 1900, active: false)
+      visit breweries_path
       expect(page).to have_content 'Number of retired breweries: 1'
+      expect(page).to have_content brewery.name
     end
 
     it 'allows user to navigate to page of a Brewery' do
+      visit breweries_path
       click_link 'Koff'
 
       expect(page).to have_content 'Koff'
