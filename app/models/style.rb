@@ -1,4 +1,6 @@
 class Style < ActiveRecord::Base
+  include RatingAverage
+
   has_many :beers
   has_many :ratings, through: :beers
 
@@ -6,13 +8,7 @@ class Style < ActiveRecord::Base
   validates :description, presence: true
 
   def self.top(n)
-    Style.all.sort_by { |s| -(s.ratings.average(:score) || 0) }.take(n)
-  end
-
-  # TODO: Figure out why undefined method `average_rating' is thrown unless
-  # the method is defined here
-  def average_rating
-    ratings.average(:score).round(1)
+    Style.all.sort_by { |s| -(s.average_rating || 0) }.take(n)
   end
 
   def to_s
