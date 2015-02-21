@@ -129,6 +129,26 @@ describe User do
       expect(user.favorite_brewery).to eq(brewery1)
     end
   end
+
+  describe 'multiple users' do
+    describe 'with ratings' do
+      let!(:user1) { FactoryGirl.create :user, username: 'User 1' }
+      let!(:user2) { FactoryGirl.create :user, username: 'User 2' }
+
+      it 'top list has correct results' do
+        create_beers_with_ratings(10, 10, user1)
+        create_beers_with_ratings(10, 10, 10, 10, user2)
+
+        top_users = User.top(2)
+
+        expect(top_users.first).to eq(user2)
+        expect(top_users.first.ratings.count).to eq(4)
+
+        expect(top_users.last).to eq(user1)
+        expect(top_users.last.ratings.count).to eq(2)
+      end
+    end
+  end
 end
 
 def create_beers_with_ratings(*scores, user)
