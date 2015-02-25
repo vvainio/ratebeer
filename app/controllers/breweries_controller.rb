@@ -9,17 +9,21 @@ class BreweriesController < ApplicationController
     @active_breweries = Brewery.active
     @retired_breweries = Brewery.retired
 
-    order = params[:order] || 'name'
+    order = session[:last_breweries_sort] = params[:order] || 'name'
 
     @active_breweries = case order
                         when 'name' then @active_breweries.sort_by(&:name)
-                        when 'year' then @active_breweries.sort_by(&:year)
+                        when 'year_asc' then @active_breweries.sort_by(&:year)
+                        when 'year_desc' then @active_breweries.sort_by(&:year).reverse
     end
 
     @retired_breweries = case order
                          when 'name' then @retired_breweries.sort_by(&:name)
-                         when 'year' then @retired_breweries.sort_by(&:year)
+                         when 'year_asc' then @retired_breweries.sort_by(&:year)
+                         when 'year_desc' then @retired_breweries.sort_by(&:year).reverse
     end
+
+    session[:last_breweries_sort] = nil if order == 'year_desc'
   end
 
   # GET /breweries/1
