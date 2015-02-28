@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   resources :breweries do
     post 'toggle_activity', on: :member
   end
+  get 'ngbrewerylist', to: 'breweries#nglist'
 
   resources :beer_clubs
 
