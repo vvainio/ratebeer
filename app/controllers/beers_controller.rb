@@ -3,6 +3,8 @@ class BeersController < ApplicationController
   before_action :ensure_that_admin_user, only: [:destroy]
   before_action :set_beer, only: [:show, :edit, :update, :destroy]
   before_action :set_breweries_and_styles_for_template, only: [:new, :edit, :create, :update]
+  before_action :expire_cache, only: [:create, :update, :destroy]
+  before_action :skip_if_cached, only: [:index]
 
   def nglist
   end
@@ -10,10 +12,8 @@ class BeersController < ApplicationController
   # GET /beers
   # GET /beers.json
   def index
-    order = params[:order] || 'name'
-
     @beers = Beer.includes(:brewery, :style).all.sort_by do |beer|
-      case order
+      case @order
       when 'name' then beer.name
       when 'brewery' then beer.brewery.name
       when 'style' then beer.style.name
@@ -92,5 +92,14 @@ class BeersController < ApplicationController
     def set_breweries_and_styles_for_template
       @breweries = Brewery.all
       @styles = Style.all
+    end
+
+    def expire_cache
+      ['beerlist-name', 'beerlist-brewery', 'beerlist-style'].each { |f| expire_fragment(f) }
+    end
+
+    def skip_if_cached
+      @order = params[:order] || 'name'
+      return render :index if fragment_exist?("beerlist-#{@order}")
     end
 end
