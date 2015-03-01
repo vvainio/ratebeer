@@ -2,6 +2,9 @@ class Membership < ActiveRecord::Base
   belongs_to :beer_club
   belongs_to :user
 
+  scope :approved, -> { where confirmed: true }
+  scope :pending, -> { where confirmed: false }
+
   validate :uniqueness_of_membership
 
   def uniqueness_of_membership
