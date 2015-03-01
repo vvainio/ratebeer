@@ -10,7 +10,7 @@ class BeersController < ApplicationController
   # GET /beers
   # GET /beers.json
   def index
-    @beers = Beer.all
+    @beers = Beer.includes(:brewery, :style).all
 
     order = params[:order] || 'name'
 
