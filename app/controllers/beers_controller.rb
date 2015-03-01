@@ -10,14 +10,14 @@ class BeersController < ApplicationController
   # GET /beers
   # GET /beers.json
   def index
-    @beers = Beer.includes(:brewery, :style).all
-
     order = params[:order] || 'name'
 
-    @beers = case order
-             when 'name' then @beers.sort_by(&:name)
-             when 'brewery' then @beers.sort_by { |b| b.brewery.name }
-             when 'style' then @beers.sort_by { |b| b.style.name }
+    @beers = Beer.includes(:brewery, :style).all.sort_by do |beer|
+      case order
+      when 'name' then beer.name
+      when 'brewery' then beer.brewery.name
+      when 'style' then beer.style.name
+      end
     end
   end
 
