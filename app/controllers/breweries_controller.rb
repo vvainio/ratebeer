@@ -2,6 +2,8 @@ class BreweriesController < ApplicationController
   before_action :ensure_that_signed_in, except: [:index, :show, :list, :nglist]
   before_action :ensure_that_admin_user, only: [:destroy]
   before_action :set_brewery, only: [:show, :edit, :update, :destroy]
+  before_action :expire_cache, only: [:create, :update, :destroy]
+  before_action :skip_if_cached, only: [:index]
 
   def nglist
   end
@@ -13,21 +15,19 @@ class BreweriesController < ApplicationController
     @active_breweries = Brewery.active
     @retired_breweries = Brewery.retired
 
-    order = session[:last_breweries_sort] = params[:order] || 'name'
-
-    @active_breweries = case order
+    @active_breweries = case @order
                         when 'name' then @active_breweries.sort_by(&:name)
                         when 'year_asc' then @active_breweries.sort_by(&:year)
                         when 'year_desc' then @active_breweries.sort_by(&:year).reverse
     end
 
-    @retired_breweries = case order
+    @retired_breweries = case @order
                          when 'name' then @retired_breweries.sort_by(&:name)
                          when 'year_asc' then @retired_breweries.sort_by(&:year)
                          when 'year_desc' then @retired_breweries.sort_by(&:year).reverse
     end
 
-    session[:last_breweries_sort] = nil if order == 'year_desc'
+    session[:last_breweries_sort] = nil if @order == 'year_desc'
   end
 
   # GET /breweries/1
@@ -104,5 +104,14 @@ class BreweriesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def brewery_params
       params.require(:brewery).permit(:name, :year, :active)
+    end
+
+    def expire_cache
+      ['brewerylist-name', 'brewerylist-brewery', 'brewerylist-style'].each { |f| expire_fragment(f) }
+    end
+
+    def skip_if_cached
+      @order = session[:last_breweries_sort] = params[:order] || 'name'
+      return render :index if fragment_exist?("brewerylist-#{@order}")
     end
 end
