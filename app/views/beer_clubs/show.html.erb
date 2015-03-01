@@ -7,14 +7,41 @@
 <p>Located in <%= @beer_club.city %></p>
 
 <h2>Members</h2>
-<% if @beer_club.users.empty? %>
+<% if @beer_club.memberships.approved.empty? %>
   <p>The club has no members yet.</p>
 <% else %>
   <ul>
-    <% @beer_club.users.each do |user| %>
-      <li><%= link_to user.username, user %></li>
+    <% @beer_club.memberships.approved.each do |membership| %>
+      <li><%= link_to membership.user.username, membership.user %></li>
     <% end %>
   </ul>
+<% end %>
+
+<% if current_user && @beer_club.memberships.pending.exists?(user_id: current_user.id) %>
+  <p>
+    <strong>Your application to join the club is pending for approval!</strong>
+  </p>
+<% end %>
+
+<% if current_user && @beer_club.memberships.approved.exists?(user_id: current_user.id) %>
+  <% if @beer_club.memberships.pending.empty? %>
+    <p>No pending applications.</p>
+  <% elsif %>
+    <p>
+      <strong>Outstanding applications</strong>
+    </p>
+
+    <ul>
+      <% @beer_club.memberships.pending.each do |application| %>
+        <li>
+          <%= link_to application.user.username, application.user %>
+          <%= link_to 'confirm', confirm_membership_path(user_id: application.user.id,
+                                                         beer_club_id: @beer_club.id),
+                                                         method: :put, class: "btn btn-primary btn-xs" %>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
 <% end %>
 
 <% if current_user %>
@@ -32,7 +59,9 @@
     <% end %>
   </p>
 
-  <p>
-    <%= edit_and_destroy_buttons(@beer_club) %>
-  </p>
+  <% if admin_user || @beer_club.memberships.approved.exists?(user_id: current_user.id) %>
+    <p>
+      <%= edit_and_destroy_buttons(@beer_club) %>
+    </p>
+  <% end %>
 <% end %>

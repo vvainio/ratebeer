@@ -8,7 +8,7 @@ class Membership < ActiveRecord::Base
   validate :uniqueness_of_membership
 
   def uniqueness_of_membership
-    if user.beer_clubs.exists?(beer_club)
+    if user.memberships.approved.find_by(beer_club.id)
       errors.add :base, 'User is already a member of this club'
     end
   end
