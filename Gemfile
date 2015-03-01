@@ -23,6 +23,7 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'capybara'
   gem 'poltergeist'
+  gem 'database_cleaner'
   gem 'launchy'
   gem 'simplecov', require: false
   gem 'rails_layout'
