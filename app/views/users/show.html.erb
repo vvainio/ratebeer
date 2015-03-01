@@ -26,17 +26,26 @@
 <% end %>
 
 <h2>beer clubs</h2>
-<% if @user.beer_clubs.empty? %>
-  <p>is not a member of any beer club</p>
+<% if @user.memberships.empty? %>
+  <p>is not a member or applicant of any beer club</p>
 <% else %>
-  <p>is a member of <%= pluralize(@user.beer_clubs.count, 'beer club', 'beer clubs') %>:</p>
-  <ul>
-    <% @user.beer_clubs.each do |club| %>
-      <li>
-        <%= link_to club.name, club %>
-      </li>
-    <% end %>
-  </ul>
+  <% unless @user.memberships.approved.empty? %>
+    <strong>Member of</strong>
+    <ul>
+      <% @user.memberships.approved.each do |membership| %>
+        <li><%= link_to membership.beer_club.name, membership.beer_club %></li>
+      <% end %>
+    </ul>
+  <% end %>
+
+  <% unless @user.memberships.pending.empty? %>
+    <strong>Pending club memberships</strong>
+    <ul>
+      <% @user.memberships.pending.each do |application| %>
+        <li><%= link_to application.beer_club.name, application.beer_club %></li>
+      <% end %>
+    </ul>
+  <% end %>
 <% end %>
 
 <% if @user == current_user %>
