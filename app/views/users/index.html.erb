@@ -3,12 +3,14 @@
 <% if @users.empty? %>
   <p>No users exist.</p>
 <% else %>
-  <p>Number of users: <%= @users.count %></p>
+  <p>Number of users: <%= @users.size %></p>
 
   <table class="table table-hover">
     <thead>
       <tr>
         <th>Username</th>
+        <th>Rated beers</th>
+        <th>Total ratings</th>
         <th colspan="3"></th>
       </tr>
     </thead>
@@ -17,6 +19,8 @@
       <% @users.each do |user| %>
         <tr>
           <td><%= link_to user.username, user %></td>
+          <td><%= user.beers.size %></td>
+          <td><%= user.ratings.size %></td>
           <td>
             <% if user.disabled && admin_user %>
               <span class="label label-info">account disabled</span>
