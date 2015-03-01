@@ -28,6 +28,7 @@ group :development, :test do
   gem 'launchy'
   gem 'simplecov', require: false
   gem 'rails_layout'
+  gem 'rack-mini-profiler'
 end
 
 group :test do
