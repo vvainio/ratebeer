@@ -3,7 +3,7 @@ class BeersController < ApplicationController
   before_action :ensure_that_admin_user, only: [:destroy]
   before_action :set_beer, only: [:show, :edit, :update, :destroy]
   before_action :set_breweries_and_styles_for_template, only: [:new, :edit, :create, :update]
-  before_action :expire_cache, only: [:create, :update, :destroy]
+  before_action :expire_cache, only: [:create, :update, :destroy, :nglist]
   before_action :skip_if_cached, only: [:index]
 
   def nglist

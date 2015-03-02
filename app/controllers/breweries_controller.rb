@@ -2,7 +2,7 @@ class BreweriesController < ApplicationController
   before_action :ensure_that_signed_in, except: [:index, :show, :list, :nglist]
   before_action :ensure_that_admin_user, only: [:destroy]
   before_action :set_brewery, only: [:show, :edit, :update, :destroy]
-  before_action :expire_cache, only: [:create, :update, :destroy]
+  before_action :expire_cache, only: [:create, :update, :destroy, :nglist]
   before_action :skip_if_cached, only: [:index]
 
   def nglist
