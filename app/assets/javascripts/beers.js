@@ -1,4 +1,4 @@
-rateBeer.controller("BeersController", function ($scope, $http) {
+rateBeer.controller("BeersController", ['$scope', '$http', function ($scope, $http) {
   $http.get('/beers.json').success(function (data, status, headers, config) {
     $scope.beers = data;
   });
@@ -11,4 +11,4 @@ rateBeer.controller("BeersController", function ($scope, $http) {
   };
 
   $scope.searchText = '';
-});
+}]);
